@@ -186,17 +186,21 @@ TrilliumOBS = [
   Response::Gain.new(749.1)
 ]
 
-def hti_04_pca_ulf s = 199.5e-6, pc = 100
-  #c = 50e-9
-  #r = 500e6
-  #jtau = 2.i * Math::PI
-  #cc = (c * 330e-9) / (c + 330e-9)
-  #pole = -1 / (r * cc)
-  #a0 = 1 / (jtau / (jtau - pole)).abs
+def hti_04_pca_ulf r = 200e6 # Eingangswiderstand [Ω]
+  s = 199.5e-6 # Sensitivität [V/Pa]
+  c = 50e-9 # Kapazität [F]
 
   jtau = 2.i * Math::PI
-  pole = -1.0 / pc
+  # Irgendeine Streukapazität von 330nF wird hier in Reihe geschaltet.
+  # Das ergibt keinen Sinn.
+  #cc = (c * 330e-9) / (c + 330e-9)
+  pole = -1 / (r * c)
   a0 = 1 / (jtau / (jtau - pole)).abs
+
+  #pc = 100
+  #jtau = 2.i * Math::PI
+  #pole = -1.0 / pc
+  #a0 = 1 / (jtau / (jtau - pole)).abs
   [
     Response::PolesZeros.new(
       [0],
@@ -318,6 +322,15 @@ def ad_conversion gain
   ]
 end
 
+def mcs_datalogger rate, gain
+  g = gain * 2**24 / 5.0
+  [
+    Response::Coefficients.new([], unit_in: 'V - Volts', type: 'D'),
+    Response::Decimation.new(input_rate: rate),
+    Response::Gain.new(g)
+  ]
+end
+
 def print_stages f, stages
   gain = 1.0
   stages.each_with_index do |stage, i|
@@ -373,7 +386,41 @@ end
 end
 
 [50, 100, 250, 500, 1000, 2000, 4000].each do |rate|
-  File.open "6D6-HTI-04-PCA-ULF-#{rate}sps.resp", 'w' do |f|
+  File.open "6D6-HTI-04-PCA-ULF-INA3M-#{rate}sps.resp", 'w' do |f|
+    f.puts "B050F03     Station:                                ST001"
+    f.puts "B050F16     Network:                                XX"
+    f.puts "B052F03     Location:                               ??"
+    f.puts "B052F04     Channel:                                BDH"
+    f.puts "B052F22     Start date:                             2015,001,00:00:00.0000"
+    f.puts "B052F23     End date:                               No Ending Time"
+
+    if rate < 250
+      print_stages f, [
+        hti_04_pca_ulf(3e6),
+        ad_conversion(1.0 / 0.625),
+        sinc_filter(rate * 5),
+        stage1(rate * 5),
+        stage2(rate * 5),
+        stage3(rate * 5),
+        stage4(rate * 5),
+        filter5(rate),
+      ]
+    else
+      print_stages f, [
+        hti_04_pca_ulf(3e6),
+        ad_conversion(1.0 / 0.625),
+        sinc_filter(rate),
+        stage1(rate),
+        stage2(rate),
+        stage3(rate),
+        stage4(rate, last_stage: true),
+      ]
+    end
+  end
+end
+
+[50, 100, 250, 500, 1000, 2000, 4000].each do |rate|
+  File.open "6D6-HTI-04-PCA-ULF-INA200M-#{rate}sps.resp", 'w' do |f|
     f.puts "B050F03     Station:                                ST001"
     f.puts "B050F16     Network:                                XX"
     f.puts "B052F03     Location:                               ??"

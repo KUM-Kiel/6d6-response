@@ -15,7 +15,7 @@ B053F03     Transfer function type:                 A
 B053F04     Stage sequence number:                  1
 B053F05     Response in units lookup:               Pa - Pascal
 B053F06     Response out units lookup:              V - Volts
-B053F07     A0 normalization factor:                1.000001E+00
+B053F07     A0 normalization factor:                1.000127E+00
 B053F08     Normalization frequency:                1.000000E+00
 B053F09     Number of zeroes:                       1
 B053F14     Number of poles:                        1
@@ -24,7 +24,7 @@ B053F14     Number of poles:                        1
 B053F10-13    0  0.000000E+00  0.000000E+00  0.000000E+00  0.000000E+00
 #            Complex poles:
 #             i  real          imag          real_error    imag_error
-B053F15-18    0 -1.000000E-02  0.000000E+00  0.000000E+00  0.000000E+00
+B053F15-18    0 -1.000000E-01  0.000000E+00  0.000000E+00  0.000000E+00
 #
 # Channel Gain
 # ------------
@@ -80,56 +80,96 @@ B061F04     Response Name:                          Sinc Filter~
 B061F05     Symmetry Code:                          C
 B061F06     Response in units lookup:               COUNTS - Digital Counts
 B061F07     Response out units lookup:              COUNTS - Digital Counts
-B061F08     Number of Coefficients:                 38
+B061F08     Number of Coefficients:                 78
 #            Coefficients:
 #             i  value
-B061F09       0  9.5367432E-07
-B061F09       1  4.7683716E-06
-B061F09       2  1.4305115E-05
-B061F09       3  3.3378601E-05
-B061F09       4  6.6757202E-05
-B061F09       5  1.2016296E-04
-B061F09       6  2.0027161E-04
-B061F09       7  3.1471252E-04
-B061F09       8  4.7206879E-04
-B061F09       9  6.8187714E-04
-B061F09      10  9.5462799E-04
-B061F09      11  1.3017654E-03
-B061F09      12  1.7356873E-03
-B061F09      13  2.2697449E-03
-B061F09      14  2.9182434E-03
-B061F09      15  3.6964417E-03
-B061F09      16  4.6157837E-03
-B061F09      17  5.6838989E-03
-B061F09      18  6.9046021E-03
-B061F09      19  8.2778931E-03
-B061F09      20  9.7999573E-03
-B061F09      21  1.1463165E-02
-B061F09      22  1.3256073E-02
-B061F09      23  1.5163422E-02
-B061F09      24  1.7166138E-02
-B061F09      25  1.9241333E-02
-B061F09      26  2.1362305E-02
-B061F09      27  2.3498535E-02
-B061F09      28  2.5615692E-02
-B061F09      29  2.7675629E-02
-B061F09      30  2.9636383E-02
-B061F09      31  3.1452179E-02
-B061F09      32  3.3082962E-02
-B061F09      33  3.4494400E-02
-B061F09      34  3.5657883E-02
-B061F09      35  3.6550522E-02
-B061F09      36  3.7155151E-02
-B061F09      37  3.7460327E-02
+B061F09       0  2.9802322E-08
+B061F09       1  1.4901161E-07
+B061F09       2  4.4703484E-07
+B061F09       3  1.0430813E-06
+B061F09       4  2.0861626E-06
+B061F09       5  3.7550926E-06
+B061F09       6  6.2584877E-06
+B061F09       7  9.8347664E-06
+B061F09       8  1.4752150E-05
+B061F09       9  2.1308661E-05
+B061F09      10  2.9832125E-05
+B061F09      11  4.0680170E-05
+B061F09      12  5.4240227E-05
+B061F09      13  7.0929527E-05
+B061F09      14  9.1195107E-05
+B061F09      15  1.1551380E-04
+B061F09      16  1.4439225E-04
+B061F09      17  1.7836690E-04
+B061F09      18  2.1800399E-04
+B061F09      19  2.6389956E-04
+B061F09      20  3.1667948E-04
+B061F09      21  3.7699938E-04
+B061F09      22  4.4554472E-04
+B061F09      23  5.2303076E-04
+B061F09      24  6.1020255E-04
+B061F09      25  7.0783496E-04
+B061F09      26  8.1673265E-04
+B061F09      27  9.3773007E-04
+B061F09      28  1.0716915E-03
+B061F09      29  1.2195110E-03
+B061F09      30  1.3821125E-03
+B061F09      31  1.5604496E-03
+B061F09      32  1.7553568E-03
+B061F09      33  1.9675493E-03
+B061F09      34  2.1976233E-03
+B061F09      35  2.4460554E-03
+B061F09      36  2.7132034E-03
+B061F09      37  2.9993057E-03
+B061F09      38  3.3044815E-03
+B061F09      39  3.6287308E-03
+B061F09      40  3.9719343E-03
+B061F09      41  4.3338537E-03
+B061F09      42  4.7141314E-03
+B061F09      43  5.1122904E-03
+B061F09      44  5.5277348E-03
+B061F09      45  5.9597492E-03
+B061F09      46  6.4074993E-03
+B061F09      47  6.8700314E-03
+B061F09      48  7.3462725E-03
+B061F09      49  7.8350306E-03
+B061F09      50  8.3349943E-03
+B061F09      51  8.8447332E-03
+B061F09      52  9.3626976E-03
+B061F09      53  9.8872185E-03
+B061F09      54  1.0416508E-02
+B061F09      55  1.0948658E-02
+B061F09      56  1.1481643E-02
+B061F09      57  1.2013316E-02
+B061F09      58  1.2541413E-02
+B061F09      59  1.3063550E-02
+B061F09      60  1.3577223E-02
+B061F09      61  1.4079809E-02
+B061F09      62  1.4568567E-02
+B061F09      63  1.5040636E-02
+B061F09      64  1.5493333E-02
+B061F09      65  1.5924156E-02
+B061F09      66  1.6330779E-02
+B061F09      67  1.6711056E-02
+B061F09      68  1.7063022E-02
+B061F09      69  1.7384887E-02
+B061F09      70  1.7675042E-02
+B061F09      71  1.7932057E-02
+B061F09      72  1.8154681E-02
+B061F09      73  1.8341839E-02
+B061F09      74  1.8492639E-02
+B061F09      75  1.8606365E-02
+B061F09      76  1.8682480E-02
+B061F09      77  1.8720627E-02
 #
 # Decimation
 # ----------
 #
 B057F03     Stage sequence number:                  3
 B057F04     Input sample rate (Hz):                 1.0240E+06
-B057F05     Decimation factor:                      16
+B057F05     Decimation factor:                      32
 B057F06     Decimation offset:                      0
-B057F07     Estimated delay (seconds):              3.6621E-05
+B057F07     Estimated delay (seconds):              7.5684E-05
 B057F08     Correction applied (seconds):           0.0000E+00
 #
 # Channel Gain
@@ -165,10 +205,10 @@ B061F09       5  5.0000000E-01
 # ----------
 #
 B057F03     Stage sequence number:                  4
-B057F04     Input sample rate (Hz):                 6.4000E+04
+B057F04     Input sample rate (Hz):                 3.2000E+04
 B057F05     Decimation factor:                      2
 B057F06     Decimation offset:                      0
-B057F07     Estimated delay (seconds):              7.8125E-05
+B057F07     Estimated delay (seconds):              1.5625E-04
 B057F08     Correction applied (seconds):           0.0000E+00
 #
 # Channel Gain
@@ -206,10 +246,10 @@ B061F09       7  5.0000000E-01
 # ----------
 #
 B057F03     Stage sequence number:                  5
-B057F04     Input sample rate (Hz):                 3.2000E+04
+B057F04     Input sample rate (Hz):                 1.6000E+04
 B057F05     Decimation factor:                      2
 B057F06     Decimation offset:                      0
-B057F07     Estimated delay (seconds):              2.1875E-04
+B057F07     Estimated delay (seconds):              4.3750E-04
 B057F08     Correction applied (seconds):           0.0000E+00
 #
 # Channel Gain
@@ -265,10 +305,10 @@ B061F09      25  2.0836936E-01
 # ----------
 #
 B057F03     Stage sequence number:                  6
-B057F04     Input sample rate (Hz):                 1.6000E+04
+B057F04     Input sample rate (Hz):                 8.0000E+03
 B057F05     Decimation factor:                      4
 B057F06     Decimation offset:                      0
-B057F07     Estimated delay (seconds):              1.5625E-03
+B057F07     Estimated delay (seconds):              3.1250E-03
 B057F08     Correction applied (seconds):           0.0000E+00
 #
 # Channel Gain
@@ -353,11 +393,11 @@ B061F09      54  4.2345953E-01
 # ----------
 #
 B057F03     Stage sequence number:                  7
-B057F04     Input sample rate (Hz):                 4.0000E+03
+B057F04     Input sample rate (Hz):                 2.0000E+03
 B057F05     Decimation factor:                      2
 B057F06     Decimation offset:                      0
-B057F07     Estimated delay (seconds):              1.3500E-02
-B057F08     Correction applied (seconds):           1.5500E-02
+B057F07     Estimated delay (seconds):              2.7000E-02
+B057F08     Correction applied (seconds):           3.1000E-02
 #
 # Channel Gain
 # ------------

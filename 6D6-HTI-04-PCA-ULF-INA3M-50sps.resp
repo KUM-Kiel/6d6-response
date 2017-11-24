@@ -15,7 +15,7 @@ B053F03     Transfer function type:                 A
 B053F04     Stage sequence number:                  1
 B053F05     Response in units lookup:               Pa - Pascal
 B053F06     Response out units lookup:              V - Volts
-B053F07     A0 normalization factor:                1.000001E+00
+B053F07     A0 normalization factor:                1.458009E+00
 B053F08     Normalization frequency:                1.000000E+00
 B053F09     Number of zeroes:                       1
 B053F14     Number of poles:                        1
@@ -24,7 +24,7 @@ B053F14     Number of poles:                        1
 B053F10-13    0  0.000000E+00  0.000000E+00  0.000000E+00  0.000000E+00
 #            Complex poles:
 #             i  real          imag          real_error    imag_error
-B053F15-18    0 -1.000000E-02  0.000000E+00  0.000000E+00  0.000000E+00
+B053F15-18    0 -6.666667E+00  0.000000E+00  0.000000E+00  0.000000E+00
 #
 # Channel Gain
 # ------------
