@@ -1,5 +1,6 @@
 all:
+	@mkdir -p resp
 	ruby lib/response.rb
 
 clean:
-	rm -f *.resp
+	rm -rf resp/

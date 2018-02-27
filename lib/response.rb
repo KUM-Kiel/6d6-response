@@ -352,7 +352,7 @@ def print_stages f, stages
 end
 
 [50, 100, 250, 500, 1000, 2000, 4000].each do |rate|
-  File.open "6D6-Trillium-#{rate}sps.resp", 'w' do |f|
+  File.open "resp/6D6-Trillium-#{rate}sps.resp", 'w' do |f|
     f.puts "B050F03     Station:                                ST001"
     f.puts "B050F16     Network:                                XX"
     f.puts "B052F03     Location:                               ??"
@@ -386,7 +386,7 @@ end
 end
 
 [50, 100, 250, 500, 1000, 2000, 4000].each do |rate|
-  File.open "6D6-HTI-04-PCA-ULF-INA3M-#{rate}sps.resp", 'w' do |f|
+  File.open "resp/6D6-HTI-04-PCA-ULF-INA3M-#{rate}sps.resp", 'w' do |f|
     f.puts "B050F03     Station:                                ST001"
     f.puts "B050F16     Network:                                XX"
     f.puts "B052F03     Location:                               ??"
@@ -420,7 +420,7 @@ end
 end
 
 [50, 100, 250, 500, 1000, 2000, 4000].each do |rate|
-  File.open "6D6-HTI-04-PCA-ULF-INA200M-#{rate}sps.resp", 'w' do |f|
+  File.open "resp/6D6-HTI-04-PCA-ULF-INA200M-#{rate}sps.resp", 'w' do |f|
     f.puts "B050F03     Station:                                ST001"
     f.puts "B050F16     Network:                                XX"
     f.puts "B052F03     Location:                               ??"
