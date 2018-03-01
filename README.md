@@ -1,7 +1,7 @@
 6D6 Response Files
 ==================
 This repository contains response files for the 6D6 datalogger in different
-configurations.
+configurations in the `resp` folder.
 
 Building
 --------

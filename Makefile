@@ -1,6 +1,6 @@
 all:
 	@mkdir -p resp
-	ruby lib/response.rb
+	ruby default.rb
 
 clean:
 	rm -rf resp/

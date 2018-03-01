@@ -164,240 +164,214 @@ module Response
       "B057F08     Correction applied (seconds):          #{'% .4E' % @correction}\n"
     end
   end
-end
 
-Trillium = [
-  Response::PolesZeros.new(
-    [0, 0, -392, -1960, -1490+1470.i, -1490-1470.i],
-    [-3.691e-2+3.702e-2.i, -3.691e-2-3.702e-2.i, -343, -370+467.i, -370-467.i, -836+1522.i, -836-1522.i, -4900+4700.i, -4900-4700.i, -6900, -15000],
-    norm_a: 4.344928e+17,
-    unit_in: 'M/S - Velocity in Meters per Second',
-    unit_out: 'V - Volts'),
-  Response::Gain.new(754.3)
-]
-
-TrilliumOBS = [
-  Response::PolesZeros.new(
-    [0, 0, -434.1],
-    [-0.03691+0.03712.i, -0.03691-0.03712.i, -371.2, -373.9+475.5.i, -373.9-475.5.i, -588.4+1508.i, -588.4-1508.i],
-    norm_a: 8.184e11,
-    unit_in: 'M/S - Velocity in Meters per Second',
-    unit_out: 'V - Volts'),
-  Response::Gain.new(749.1)
-]
-
-def hti_04_pca_ulf r = 200e6 # Eingangswiderstand [Ω]
-  s = 199.5e-6 # Sensitivität [V/Pa]
-  c = 50e-9 # Kapazität [F]
-
-  jtau = 2.i * Math::PI
-  # Irgendeine Streukapazität von 330nF wird hier in Reihe geschaltet.
-  # Das ergibt keinen Sinn.
-  #cc = (c * 330e-9) / (c + 330e-9)
-  pole = -1 / (r * c)
-  a0 = 1 / (jtau / (jtau - pole)).abs
-
-  #pc = 100
-  #jtau = 2.i * Math::PI
-  #pole = -1.0 / pc
-  #a0 = 1 / (jtau / (jtau - pole)).abs
-  [
+  Trillium = [
     Response::PolesZeros.new(
-      [0],
-      [pole],
-      norm_a: a0,
-      unit_in: 'Pa - Pascal',
+      [0, 0, -392, -1960, -1490+1470.i, -1490-1470.i],
+      [-3.691e-2+3.702e-2.i, -3.691e-2-3.702e-2.i, -343, -370+467.i, -370-467.i, -836+1522.i, -836-1522.i, -4900+4700.i, -4900-4700.i, -6900, -15000],
+      norm_a: 4.344928e+17,
+      unit_in: 'M/S - Velocity in Meters per Second',
       unit_out: 'V - Volts'),
-    Response::Gain.new(s)
+    Response::Gain.new(754.3)
   ]
-end
 
-def conv a, b
-  out = []
-  (a.count + b.count - 1).times do |n|
-    x = 0
-    kmin = (n >= b.count - 1) ? n - (b.count - 1) : 0
-    kmax = (n < a.count - 1) ? n : a.count - 1
-    (kmin..kmax).each do |k|
-      x += (a[k] || 0) * (b[n-k] || 0)
-    end
-    out << x
+  TrilliumOBS = [
+    Response::PolesZeros.new(
+      [0, 0, -434.1],
+      [-0.03691+0.03712.i, -0.03691-0.03712.i, -371.2, -373.9+475.5.i, -373.9-475.5.i, -588.4+1508.i, -588.4-1508.i],
+      norm_a: 8.184e11,
+      unit_in: 'M/S - Velocity in Meters per Second',
+      unit_out: 'V - Volts'),
+    Response::Gain.new(749.1)
+  ]
+
+  def self.hti_04_pca_ulf values = {}
+    r = values[:R] || 200e6 # Eingangswiderstand [Ω]
+    s = values[:S] || 199.5e-6 # Sensitivität [V/Pa]
+    c = values[:C] || 50e-9 # Kapazität [F]
+
+    jtau = 2.i * Math::PI
+    pole = -1 / (r * c)
+    a0 = 1 / (jtau / (jtau - pole)).abs
+
+    [
+      Response::PolesZeros.new(
+        [0],
+        [pole],
+        norm_a: a0,
+        unit_in: 'Pa - Pascal',
+        unit_out: 'V - Volts'),
+      Response::Gain.new(s)
+    ]
   end
-  out
-end
 
-def sinc_filter rate
-  decimation = 1024000 / (rate * 32)
-  h = 5.times.map{[1.0 / decimation] * decimation}.reduce{|a, b| conv a, b}
-  [
-    Response::FIR.new(h, name: 'Sinc Filter'),
-    Response::Decimation.new(input_rate: 1024000, factor: decimation, delay: (h.count - 1) / 2048000.0),
-    Response::Gain.new(1, frequency: 0)
-  ]
-end
+  def self.conv a, b
+    out = []
+    (a.count + b.count - 1).times do |n|
+      x = 0
+      kmin = (n >= b.count - 1) ? n - (b.count - 1) : 0
+      kmax = (n < a.count - 1) ? n : a.count - 1
+      (kmin..kmax).each do |k|
+        x += (a[k] || 0) * (b[n-k] || 0)
+      end
+      out << x
+    end
+    out
+  end
 
-def stage1 rate
-  [
-    Response::FIR.new([
-        3, 0, -25, 0, 150, 256, 150, 0, -25, 0, 3
-      ].map{|x| (x.to_r / 512).to_f},
-      name: 'FIR Stage 1'),
-    Response::Decimation.new(input_rate: rate * 32, factor: 2, delay: 5.0 / (rate * 32)),
-    Response::Gain.new(1, frequency: 0)
-  ]
-end
+  def self.sinc_filter rate
+    decimation = 1024000 / (rate * 32)
+    h = 5.times.map{[1.0 / decimation] * decimation}.reduce{|a, b| conv a, b}
+    [
+      Response::FIR.new(h, name: 'Sinc Filter'),
+      Response::Decimation.new(input_rate: 1024000, factor: decimation, delay: (h.count - 1) / 2048000.0),
+      Response::Gain.new(1, frequency: 0)
+    ]
+  end
 
-def stage2 rate
-  [
-    Response::FIR.new([
-        -10944, 0, 103807, 0, -507903, 0, 2512192, 4194304, 2512192, 0,
-        -507903, 0, 103807, 0, -10944
-      ].map{|x| (x.to_r / 8388608).to_f},
-      name: 'FIR Stage 2'),
-    Response::Decimation.new(input_rate: rate * 16, factor: 2, delay: 7.0 / (rate * 16)),
-    Response::Gain.new(1, frequency: 0)
-  ]
-end
+  def self.stage1 rate
+    [
+      Response::FIR.new([
+          3, 0, -25, 0, 150, 256, 150, 0, -25, 0, 3
+        ].map{|x| (x.to_r / 512).to_f},
+        name: 'FIR Stage 1'),
+      Response::Decimation.new(input_rate: rate * 32, factor: 2, delay: 5.0 / (rate * 32)),
+      Response::Gain.new(1, frequency: 0)
+    ]
+  end
 
-def stage3 rate
-  [
-    Response::FIR.new([
-        0, 0, -73, -874, -4648, -16147, -41280, -80934, -120064, -118690,
-        -18203, 224751, 580196, 893263, 891396, 293598, -987253, -2635779,
-        -3860322, -3572512, -822573, 4669054, 12153698, 19911100, 25779390,
-        27966862, 25779390, 19911100, 12153698, 4669054, -822573, -3572512,
-        -3860322, -2635779, -987253, 293598, 891396, 893263, 580196, 224751,
-        -18203, -118690, -120064, -80934, -41280, -16147, -4648, -874, -73,
-        0, 0
-      ].map{|x| (x.to_r / 134217728).to_f},
-      name: 'FIR Stage 3'),
-    Response::Decimation.new(input_rate: rate * 8, factor: 4, delay: 25.0 / (rate * 8)),
-    Response::Gain.new(1, frequency: 0)
-  ]
-end
+  def self.stage2 rate
+    [
+      Response::FIR.new([
+          -10944, 0, 103807, 0, -507903, 0, 2512192, 4194304, 2512192, 0,
+          -507903, 0, 103807, 0, -10944
+        ].map{|x| (x.to_r / 8388608).to_f},
+        name: 'FIR Stage 2'),
+      Response::Decimation.new(input_rate: rate * 16, factor: 2, delay: 7.0 / (rate * 16)),
+      Response::Gain.new(1, frequency: 0)
+    ]
+  end
 
-def stage4 rate, options = {}
-  [
-    Response::FIR.new([
-        -132, -432, -75, 2481, 6692, 7419, -266, -10663, -8280, 10620, 22008,
-        348, -34123, -25549, 33460, 61387, -7546, -94192, -50629, 101135, 134826,
-        -56626, -220104, -56082, 263758, 231231, -215231, -430178, 34715, 580424,
-        283878, -588382, -693209, 366118, 1084786, 132893, -1300087, -878642,
-        1162189, 1741565, -522533, -2490395, -688945, 2811738, 2425494, -2338095,
-        -4511116, 641555, 6661730, 2950811, -8538057, -10537298, 9818477, 41426374,
-        56835776, 41426374, 9818477, -10537298, -8538057, 2950811, 6661730, 641555,
-        -4511116, -2338095, 2425494, 2811738, -688945, -2490395, -522533, 1741565,
-        1162189, -878642, -1300087, 132893, 1084786, 366118, -693209, -588382,
-        283878, 580424, 34715, -430178, -215231, 231231, 263758, -56082, -220104,
-        -56626, 134826, 101135, -50629, -94192, -7546, 61387, 33460, -25549,
-        -34123, 348, 22008, 10620, -8280, -10663, -266, 7419, 6692, 2481, -75,
-        -432, -132
-      ].map{|x| (x.to_r / 134217728).to_f},
-      name: 'FIR Stage 4'),
-    Response::Decimation.new(input_rate: rate * 2, factor: 2, delay: 54.0 / (rate * 2), correction: options[:last_stage] ? (31.0 / rate) : 0.0),
-    Response::Gain.new(1, frequency: 0)
-  ]
-end
+  def self.stage3 rate
+    [
+      Response::FIR.new([
+          0, 0, -73, -874, -4648, -16147, -41280, -80934, -120064, -118690,
+          -18203, 224751, 580196, 893263, 891396, 293598, -987253, -2635779,
+          -3860322, -3572512, -822573, 4669054, 12153698, 19911100, 25779390,
+          27966862, 25779390, 19911100, 12153698, 4669054, -822573, -3572512,
+          -3860322, -2635779, -987253, 293598, 891396, 893263, 580196, 224751,
+          -18203, -118690, -120064, -80934, -41280, -16147, -4648, -874, -73,
+          0, 0
+        ].map{|x| (x.to_r / 134217728).to_f},
+        name: 'FIR Stage 3'),
+      Response::Decimation.new(input_rate: rate * 8, factor: 4, delay: 25.0 / (rate * 8)),
+      Response::Gain.new(1, frequency: 0)
+    ]
+  end
 
-def filter5 rate
-  [
-    Response::FIR.new([
-        4, -14, -46, -85, -119, -127, -91, 0, 141, 308, 455, 527, 468, 243, -145,
-        -644, -1150, -1521, -1601, -1255, -400, 961, 2731, 4722, 6681, 8335, 9442,
-        9830, 9442, 8335, 6681, 4722, 2731, 961, -400, -1255, -1601, -1521, -1150,
-        -644, -145, 243, 468, 527, 455, 308, 141, 0, -91, -127, -119, -85, -46, -14, 4
-      ].map{|i| (i.to_r / 65536).to_f},
-      name: 'FIR Stage 5'),
-    Response::Decimation.new(factor: 5, input_rate: rate * 5, delay: 27.0 / (rate * 5), correction: (11.0 / rate)),
-    Response::Gain.new(1, frequency: 0)
-  ]
-end
+  def self.stage4 rate, options = {}
+    [
+      Response::FIR.new([
+          -132, -432, -75, 2481, 6692, 7419, -266, -10663, -8280, 10620, 22008,
+          348, -34123, -25549, 33460, 61387, -7546, -94192, -50629, 101135,
+          134826, -56626, -220104, -56082, 263758, 231231, -215231, -430178,
+          34715, 580424, 283878, -588382, -693209, 366118, 1084786, 132893,
+          -1300087, -878642, 1162189, 1741565, -522533, -2490395, -688945,
+          2811738, 2425494, -2338095, -4511116, 641555, 6661730, 2950811,
+          -8538057, -10537298, 9818477, 41426374, 56835776, 41426374, 9818477,
+          -10537298, -8538057, 2950811, 6661730, 641555, -4511116, -2338095,
+          2425494, 2811738, -688945, -2490395, -522533, 1741565, 1162189,
+          -878642, -1300087, 132893, 1084786, 366118, -693209, -588382, 283878,
+          580424, 34715, -430178, -215231, 231231, 263758, -56082, -220104,
+          -56626, 134826, 101135, -50629, -94192, -7546, 61387, 33460, -25549,
+          -34123, 348, 22008, 10620, -8280, -10663, -266, 7419, 6692, 2481, -75,
+          -432, -132
+        ].map{|x| (x.to_r / 134217728).to_f},
+        name: 'FIR Stage 4'),
+      Response::Decimation.new(input_rate: rate * 2, factor: 2, delay: 54.0 / (rate * 2), correction: options[:last_stage] ? (31.0 / rate) : 0.0),
+      Response::Gain.new(1, frequency: 0)
+    ]
+  end
 
-def ad_conversion gain
-  g = gain * 2**31
-  [
-    Response::Coefficients.new([], unit_in: 'V - Volts', type: 'D'),
-    Response::Decimation.new(input_rate: 1024000),
-    Response::Gain.new(g)
-  ]
-end
+  def self.filter5 rate
+    [
+      Response::FIR.new([
+          4, -14, -46, -85, -119, -127, -91, 0, 141, 308, 455, 527, 468, 243,
+          -145, -644, -1150, -1521, -1601, -1255, -400, 961, 2731, 4722, 6681,
+          8335, 9442, 9830, 9442, 8335, 6681, 4722, 2731, 961, -400, -1255,
+          -1601, -1521, -1150, -644, -145, 243, 468, 527, 455, 308, 141, 0, -91,
+          -127, -119, -85, -46, -14, 4
+        ].map{|i| (i.to_r / 65536).to_f},
+        name: 'FIR Stage 5'),
+      Response::Decimation.new(factor: 5, input_rate: rate * 5, delay: 27.0 / (rate * 5), correction: (11.0 / rate)),
+      Response::Gain.new(1, frequency: 0)
+    ]
+  end
 
-def mcs_datalogger rate, gain
-  g = gain * 2**24 / 5.0
-  [
-    Response::Coefficients.new([], unit_in: 'V - Volts', type: 'D'),
-    Response::Decimation.new(input_rate: rate),
-    Response::Gain.new(g)
-  ]
-end
+  def self.ad_conversion gain
+    g = gain * 2**31
+    [
+      Response::Coefficients.new([], unit_in: 'V - Volts', type: 'D'),
+      Response::Decimation.new(input_rate: 1024000),
+      Response::Gain.new(g)
+    ]
+  end
 
-def print_stages f, stages
-  gain = 1.0
-  stages.each_with_index do |stage, i|
-    s = (i + 1).to_s
-    f.puts "#"
-    f.puts "# Stage #{s}"
-    f.puts "# ======#{'=' * s.length}"
-    stage.each do |x|
-      f.puts x.to_resp(i + 1)
-      if x.is_a? Response::Gain
-        gain *= x.gain
+  def self.mcs_datalogger rate, gain
+    g = gain * 2**24 / 5.0
+    [
+      Response::Coefficients.new([], unit_in: 'V - Volts', type: 'D'),
+      Response::Decimation.new(input_rate: rate),
+      Response::Gain.new(g)
+    ]
+  end
+
+  def self.print_stages f, stages
+    gain = 1.0
+    stages.each_with_index do |stage, i|
+      s = (i + 1).to_s
+      f.puts "#"
+      f.puts "# Stage #{s}"
+      f.puts "# ======#{'=' * s.length}"
+      stage.each do |x|
+        f.puts x.to_resp(i + 1)
+        if x.is_a? Response::Gain
+          gain *= x.gain
+        end
       end
     end
+    f.puts "#"
+    f.puts "# Total Gain"
+    f.puts "# =========="
+    f.puts Response::Gain.new(gain).to_resp(0)
   end
-  f.puts "#"
-  f.puts "# Total Gain"
-  f.puts "# =========="
-  f.puts Response::Gain.new(gain).to_resp(0)
-end
 
-[50, 100, 250, 500, 1000, 2000, 4000].each do |rate|
-  File.open "resp/6D6-Trillium-#{rate}sps.resp", 'w' do |f|
-    f.puts "B050F03     Station:                                ST001"
-    f.puts "B050F16     Network:                                XX"
-    f.puts "B052F03     Location:                               ??"
-    f.puts "B052F04     Channel:                                BHZ"
-    f.puts "B052F22     Start date:                             2015,001,00:00:00.0000"
-    f.puts "B052F23     End date:                               No Ending Time"
+  def self.create_resp_file name, stages, options = {}
+    station = options[:station] || "ST001"
+    network = options[:network] || "XX"
+    location = options[:location] || "??"
+    channel = options[:channel] || "BHZ"
+    start_date = options[:start_date] || "2015,001,00:00:00.0000"
+    end_date = options[:end_date] || "No Ending Time"
+    File.open name, 'w' do |f|
+      f.puts "B050F03     Station:                                #{station}"
+      f.puts "B050F16     Network:                                #{network}"
+      f.puts "B052F03     Location:                               #{location}"
+      f.puts "B052F04     Channel:                                #{channel}"
+      f.puts "B052F22     Start date:                             #{start_date}"
+      f.puts "B052F23     End date:                               #{end_date}"
 
-    if rate < 250
-      print_stages f, [
-        TrilliumOBS,
-        ad_conversion(1.0 / 20),
-        sinc_filter(rate * 5),
-        stage1(rate * 5),
-        stage2(rate * 5),
-        stage3(rate * 5),
-        stage4(rate * 5),
-        filter5(rate),
-      ]
-    else
-      print_stages f, [
-        TrilliumOBS,
-        ad_conversion(1.0 / 20),
-        sinc_filter(rate),
-        stage1(rate),
-        stage2(rate),
-        stage3(rate),
-        stage4(rate, last_stage: true),
-      ]
+      print_stages f, stages
     end
   end
-end
 
-[50, 100, 250, 500, 1000, 2000, 4000].each do |rate|
-  File.open "resp/6D6-HTI-04-PCA-ULF-INA3M-#{rate}sps.resp", 'w' do |f|
-    f.puts "B050F03     Station:                                ST001"
-    f.puts "B050F16     Network:                                XX"
-    f.puts "B052F03     Location:                               ??"
-    f.puts "B052F04     Channel:                                BDH"
-    f.puts "B052F22     Start date:                             2015,001,00:00:00.0000"
-    f.puts "B052F23     End date:                               No Ending Time"
-
+  # Create stages for a 6D6 datalogger.
+  # You need to supply the sample rate, the input range in Volts and the stages
+  # before AD conversion.
+  def self.stages_6d6 rate, input_range, stages
     if rate < 250
-      print_stages f, [
-        hti_04_pca_ulf(3e6),
-        ad_conversion(1.0 / 0.625),
+      stages + [
+        ad_conversion(1.0 / input_range),
         sinc_filter(rate * 5),
         stage1(rate * 5),
         stage2(rate * 5),
@@ -406,43 +380,8 @@ end
         filter5(rate),
       ]
     else
-      print_stages f, [
-        hti_04_pca_ulf(3e6),
-        ad_conversion(1.0 / 0.625),
-        sinc_filter(rate),
-        stage1(rate),
-        stage2(rate),
-        stage3(rate),
-        stage4(rate, last_stage: true),
-      ]
-    end
-  end
-end
-
-[50, 100, 250, 500, 1000, 2000, 4000].each do |rate|
-  File.open "resp/6D6-HTI-04-PCA-ULF-INA200M-#{rate}sps.resp", 'w' do |f|
-    f.puts "B050F03     Station:                                ST001"
-    f.puts "B050F16     Network:                                XX"
-    f.puts "B052F03     Location:                               ??"
-    f.puts "B052F04     Channel:                                BDH"
-    f.puts "B052F22     Start date:                             2015,001,00:00:00.0000"
-    f.puts "B052F23     End date:                               No Ending Time"
-
-    if rate < 250
-      print_stages f, [
-        hti_04_pca_ulf(),
-        ad_conversion(1.0 / 0.625),
-        sinc_filter(rate * 5),
-        stage1(rate * 5),
-        stage2(rate * 5),
-        stage3(rate * 5),
-        stage4(rate * 5),
-        filter5(rate),
-      ]
-    else
-      print_stages f, [
-        hti_04_pca_ulf(),
-        ad_conversion(1.0 / 0.625),
+      stages + [
+        ad_conversion(1.0 / input_range),
         sinc_filter(rate),
         stage1(rate),
         stage2(rate),
