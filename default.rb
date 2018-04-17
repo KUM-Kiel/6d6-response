@@ -3,7 +3,7 @@ require './lib/response'
 [50, 100, 250, 500, 1000, 2000, 4000].each do |rate|
   Response.create_resp_file("resp/6D6-Trillium-#{rate}sps.resp",
     Response.stages_6d6(rate, 20 * Math.sqrt(2), [
-      Response::TrilliumOBS,
+      Response::TrilliumCompact120,
     ]))
 end
 

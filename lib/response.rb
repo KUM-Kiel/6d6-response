@@ -165,7 +165,7 @@ module Response
     end
   end
 
-  Trillium = [
+  TrilliumCompact120 = [
     Response::PolesZeros.new(
       [0, 0, -392, -1960, -1490+1470.i, -1490-1470.i],
       [-3.691e-2+3.702e-2.i, -3.691e-2-3.702e-2.i, -343, -370+467.i, -370-467.i, -836+1522.i, -836-1522.i, -4900+4700.i, -4900-4700.i, -6900, -15000],
@@ -173,16 +173,6 @@ module Response
       unit_in: 'M/S - Velocity in Meters per Second',
       unit_out: 'V - Volts'),
     Response::Gain.new(754.3)
-  ]
-
-  TrilliumOBS = [
-    Response::PolesZeros.new(
-      [0, 0, -434.1],
-      [-0.03691+0.03712.i, -0.03691-0.03712.i, -371.2, -373.9+475.5.i, -373.9-475.5.i, -588.4+1508.i, -588.4-1508.i],
-      norm_a: 8.184e11,
-      unit_in: 'M/S - Velocity in Meters per Second',
-      unit_out: 'V - Volts'),
-    Response::Gain.new(749.1)
   ]
 
   def self.hti_04_pca_ulf values = {}
