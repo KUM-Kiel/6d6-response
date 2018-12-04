@@ -9,7 +9,7 @@ File.read('hydrophones.csv').each_line.drop(1).each do |line|
   # Extract data
   station = data[0]
   hydrophone = data[1]
-  capacitance = data[2].to_f
+  capacitance = data[2].to_f * 1e-9 # nF
   sensitivity = data[3].to_f
   # Convert sensitivity from dB.
   # The constant of 120 comes from the difference uPa vs Pa.
