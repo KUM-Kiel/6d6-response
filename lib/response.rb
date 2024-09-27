@@ -195,6 +195,36 @@ module Response
     ]
   end
 
+
+  def self.geophone_4point5_Hz values = {}
+  r = values[:R] || 3e6  # Eingangswiderstand/Shunt resistor [Ω]
+  s = values[:S] || 28.8 # Sensitivität [V/m/s]
+  fo = 4.5 	# Natural frequency of sensor [Hz]
+  m = 0.0111 	# mass of the coil [Kg]
+  rc = 375      # feedback coil resistance [Ohm]
+  bo = 0.56     # open circuit damping due to mechanical properties of the sensor
+  bc = 0.001    # current damping due to electrical properties of the sensor
+  z_amp = 3e-12  # input impedance of the pre-amplifier in the data logger  
+  
+  bt = bo + bc
+  t = Math::sqrt ((1-(bt**2)))
+  
+  pole_real = -2 * Math::PI * fo * bt
+  pole_img = 2 * Math::PI * fo * t
+
+  pole1 = pole_real+pole_img.i
+  pole2 = pole_real-pole_img.i
+    [ Response::PolesZeros.new(
+      [0, 0],
+      [pole1, pole2],
+      norm_a: 1.0,
+      unit_in: 'M/S - Velocity in Meters per Second',
+      unit_out: 'V - Volts'),
+      Response::Gain.new(s)
+    ]
+
+  end
+
   def self.conv a, b
     out = []
     (a.count + b.count - 1).times do |n|
