@@ -1,0 +1,501 @@
+B050F03     Station:                                ST001
+B050F16     Network:                                XX
+B052F03     Location:                               ??
+B052F04     Channel:                                SHZ
+B052F22     Start date:                             2015,001,00:00:00.0000
+B052F23     End date:                               No Ending Time
+#
+# Stage 1
+# =======
+#
+# Response (Poles & Zeros)
+# ------------------------
+#
+B053F03     Transfer function type:                 A
+B053F04     Stage sequence number:                  1
+B053F05     Response in units lookup:               M/S - Velocity in Meters per Second
+B053F06     Response out units lookup:              V - Volts
+B053F07     A0 normalization factor:                1.000000E+00
+B053F08     Normalization frequency:                5.000000E+01
+B053F09     Number of zeroes:                       2
+B053F14     Number of poles:                        2
+#            Complex zeroes:
+#             i  real          imag          real_error    imag_error
+B053F10-13    0  0.000000E+00  0.000000E+00  0.000000E+00  0.000000E+00
+B053F10-13    1  0.000000E+00  0.000000E+00  0.000000E+00  0.000000E+00
+#            Complex poles:
+#             i  real          imag          real_error    imag_error
+B053F15-18    0 -2.221110E+01 -2.221780E+01  0.000000E+00  0.000000E+00
+B053F15-18    1 -2.221110E+01  2.221780E+01  0.000000E+00  0.000000E+00
+#
+# Channel Gain
+# ------------
+#
+B058F03     Stage sequence number:                  1
+B058F04     Gain:                                   1.760000E+00
+B058F05     Frequency of gain:                      5.000000E+01
+B058F06     Number of calibrations:                 0
+#
+# Stage 2
+# =======
+#
+# Response (Coefficients)
+# -----------------------
+#
+B054F03     Response type:                          D
+B054F04     Stage sequence number:                  2
+B054F05     Response in units lookup:               V - Volts
+B054F06     Response out units lookup:              COUNTS - Digital Counts
+B054F07     Number of numerators:                   0
+#            Numerators:
+#             i  value         error
+B054F10     Number of denominators:                 0
+#            Denominators:
+#             i  value         error
+#
+# Decimation
+# ----------
+#
+B057F03     Stage sequence number:                  2
+B057F04     Input sample rate (Hz):                 1.0240E+06
+B057F05     Decimation factor:                      1
+B057F06     Decimation offset:                      0
+B057F07     Estimated delay (seconds):              0.0000E+00
+B057F08     Correction applied (seconds):           0.0000E+00
+#
+# Channel Gain
+# ------------
+#
+B058F03     Stage sequence number:                  2
+B058F04     Gain:                                   3.435974E+09
+B058F05     Frequency of gain:                      1.000000E+00
+B058F06     Number of calibrations:                 0
+#
+# Stage 3
+# =======
+#
+# FIR Response
+# ------------
+#
+B061F03     Stage sequence number:                  3
+B061F04     Response Name:                          Sinc Filter~
+B061F05     Symmetry Code:                          C
+B061F06     Response in units lookup:               COUNTS - Digital Counts
+B061F07     Response out units lookup:              COUNTS - Digital Counts
+B061F08     Number of Coefficients:                 158
+#            Coefficients:
+#             i  value
+B061F09       0  9.3132257E-10
+B061F09       1  4.6566129E-09
+B061F09       2  1.3969839E-08
+B061F09       3  3.2596290E-08
+B061F09       4  6.5192580E-08
+B061F09       5  1.1734664E-07
+B061F09       6  1.9557774E-07
+B061F09       7  3.0733645E-07
+B061F09       8  4.6100467E-07
+B061F09       9  6.6589564E-07
+B061F09      10  9.3225390E-07
+B061F09      11  1.2712553E-06
+B061F09      12  1.6950071E-06
+B061F09      13  2.2165477E-06
+B061F09      14  2.8498471E-06
+B061F09      15  3.6098063E-06
+B061F09      16  4.5122579E-06
+B061F09      17  5.5739656E-06
+B061F09      18  6.8126246E-06
+B061F09      19  8.2468614E-06
+B061F09      20  9.8962337E-06
+B061F09      21  1.1781231E-05
+B061F09      22  1.3923272E-05
+B061F09      23  1.6344711E-05
+B061F09      24  1.9068830E-05
+B061F09      25  2.2119842E-05
+B061F09      26  2.5522895E-05
+B061F09      27  2.9304065E-05
+B061F09      28  3.3490360E-05
+B061F09      29  3.8109720E-05
+B061F09      30  4.3191016E-05
+B061F09      31  4.8764050E-05
+B061F09      32  5.4859556E-05
+B061F09      33  6.1509199E-05
+B061F09      34  6.8745576E-05
+B061F09      35  7.6602213E-05
+B061F09      36  8.5113570E-05
+B061F09      37  9.4315037E-05
+B061F09      38  1.0424294E-04
+B061F09      39  1.1493452E-04
+B061F09      40  1.2642797E-04
+B061F09      41  1.3876241E-04
+B061F09      42  1.5197787E-04
+B061F09      43  1.6611535E-04
+B061F09      44  1.8121675E-04
+B061F09      45  1.9732490E-04
+B061F09      46  2.1448359E-04
+B061F09      47  2.3273751E-04
+B061F09      48  2.5213230E-04
+B061F09      49  2.7271453E-04
+B061F09      50  2.9453170E-04
+B061F09      51  3.1763222E-04
+B061F09      52  3.4206547E-04
+B061F09      53  3.6788173E-04
+B061F09      54  3.9513223E-04
+B061F09      55  4.2386912E-04
+B061F09      56  4.5414548E-04
+B061F09      57  4.8601534E-04
+B061F09      58  5.1953364E-04
+B061F09      59  5.5475626E-04
+B061F09      60  5.9174001E-04
+B061F09      61  6.3054264E-04
+B061F09      62  6.7122281E-04
+B061F09      63  7.1384013E-04
+B061F09      64  7.5845048E-04
+B061F09      65  8.0510601E-04
+B061F09      66  8.5385516E-04
+B061F09      67  9.0474263E-04
+B061F09      68  9.5780939E-04
+B061F09      69  1.0130927E-03
+B061F09      70  1.0706261E-03
+B061F09      71  1.1304393E-03
+B061F09      72  1.1925586E-03
+B061F09      73  1.2570061E-03
+B061F09      74  1.3238005E-03
+B061F09      75  1.3929568E-03
+B061F09      76  1.4644861E-03
+B061F09      77  1.5383959E-03
+B061F09      78  1.6146898E-03
+B061F09      79  1.6933680E-03
+B061F09      80  1.7744265E-03
+B061F09      81  1.8578582E-03
+B061F09      82  1.9436516E-03
+B061F09      83  2.0317920E-03
+B061F09      84  2.1222606E-03
+B061F09      85  2.2150353E-03
+B061F09      86  2.3100898E-03
+B061F09      87  2.4073943E-03
+B061F09      88  2.5069155E-03
+B061F09      89  2.6086159E-03
+B061F09      90  2.7124546E-03
+B061F09      91  2.8183870E-03
+B061F09      92  2.9263645E-03
+B061F09      93  3.0363351E-03
+B061F09      94  3.1482428E-03
+B061F09      95  3.2620281E-03
+B061F09      96  3.3776276E-03
+B061F09      97  3.4949742E-03
+B061F09      98  3.6139973E-03
+B061F09      99  3.7346222E-03
+B061F09     100  3.8567707E-03
+B061F09     101  3.9803609E-03
+B061F09     102  4.1053072E-03
+B061F09     103  4.2315200E-03
+B061F09     104  4.3589063E-03
+B061F09     105  4.4873692E-03
+B061F09     106  4.6168081E-03
+B061F09     107  4.7471188E-03
+B061F09     108  4.8781931E-03
+B061F09     109  5.0099194E-03
+B061F09     110  5.1421821E-03
+B061F09     111  5.2748621E-03
+B061F09     112  5.4078363E-03
+B061F09     113  5.5409782E-03
+B061F09     114  5.6741573E-03
+B061F09     115  5.8072396E-03
+B061F09     116  5.9400871E-03
+B061F09     117  6.0725585E-03
+B061F09     118  6.2045082E-03
+B061F09     119  6.3357875E-03
+B061F09     120  6.4662434E-03
+B061F09     121  6.5957196E-03
+B061F09     122  6.7240559E-03
+B061F09     123  6.8510883E-03
+B061F09     124  6.9766492E-03
+B061F09     125  7.1005672E-03
+B061F09     126  7.2226673E-03
+B061F09     127  7.3427707E-03
+B061F09     128  7.4607041E-03
+B061F09     129  7.5762998E-03
+B061F09     130  7.6893959E-03
+B061F09     131  7.7998359E-03
+B061F09     132  7.9074688E-03
+B061F09     133  8.0121495E-03
+B061F09     134  8.1137381E-03
+B061F09     135  8.2121007E-03
+B061F09     136  8.3071087E-03
+B061F09     137  8.3986390E-03
+B061F09     138  8.4865745E-03
+B061F09     139  8.5708033E-03
+B061F09     140  8.6512193E-03
+B061F09     141  8.7277219E-03
+B061F09     142  8.8002160E-03
+B061F09     143  8.8686123E-03
+B061F09     144  8.9328270E-03
+B061F09     145  8.9927819E-03
+B061F09     146  9.0484042E-03
+B061F09     147  9.0996269E-03
+B061F09     148  9.1463886E-03
+B061F09     149  9.1886334E-03
+B061F09     150  9.2263110E-03
+B061F09     151  9.2593767E-03
+B061F09     152  9.2877913E-03
+B061F09     153  9.3115214E-03
+B061F09     154  9.3305390E-03
+B061F09     155  9.3448218E-03
+B061F09     156  9.3543530E-03
+B061F09     157  9.3591213E-03
+#
+# Decimation
+# ----------
+#
+B057F03     Stage sequence number:                  3
+B057F04     Input sample rate (Hz):                 1.0240E+06
+B057F05     Decimation factor:                      64
+B057F06     Decimation offset:                      0
+B057F07     Estimated delay (seconds):              1.5381E-04
+B057F08     Correction applied (seconds):           0.0000E+00
+#
+# Channel Gain
+# ------------
+#
+B058F03     Stage sequence number:                  3
+B058F04     Gain:                                   1.000000E+00
+B058F05     Frequency of gain:                      0.000000E+00
+B058F06     Number of calibrations:                 0
+#
+# Stage 4
+# =======
+#
+# FIR Response
+# ------------
+#
+B061F03     Stage sequence number:                  4
+B061F04     Response Name:                          FIR Stage 1~
+B061F05     Symmetry Code:                          B
+B061F06     Response in units lookup:               COUNTS - Digital Counts
+B061F07     Response out units lookup:              COUNTS - Digital Counts
+B061F08     Number of Coefficients:                 6
+#            Coefficients:
+#             i  value
+B061F09       0  5.8593750E-03
+B061F09       1  0.0000000E+00
+B061F09       2 -4.8828125E-02
+B061F09       3  0.0000000E+00
+B061F09       4  2.9296875E-01
+B061F09       5  5.0000000E-01
+#
+# Decimation
+# ----------
+#
+B057F03     Stage sequence number:                  4
+B057F04     Input sample rate (Hz):                 1.6000E+04
+B057F05     Decimation factor:                      2
+B057F06     Decimation offset:                      0
+B057F07     Estimated delay (seconds):              3.1250E-04
+B057F08     Correction applied (seconds):           0.0000E+00
+#
+# Channel Gain
+# ------------
+#
+B058F03     Stage sequence number:                  4
+B058F04     Gain:                                   1.000000E+00
+B058F05     Frequency of gain:                      0.000000E+00
+B058F06     Number of calibrations:                 0
+#
+# Stage 5
+# =======
+#
+# FIR Response
+# ------------
+#
+B061F03     Stage sequence number:                  5
+B061F04     Response Name:                          FIR Stage 2~
+B061F05     Symmetry Code:                          B
+B061F06     Response in units lookup:               COUNTS - Digital Counts
+B061F07     Response out units lookup:              COUNTS - Digital Counts
+B061F08     Number of Coefficients:                 8
+#            Coefficients:
+#             i  value
+B061F09       0 -1.3046265E-03
+B061F09       1  0.0000000E+00
+B061F09       2  1.2374759E-02
+B061F09       3  0.0000000E+00
+B061F09       4 -6.0546756E-02
+B061F09       5  0.0000000E+00
+B061F09       6  2.9947662E-01
+B061F09       7  5.0000000E-01
+#
+# Decimation
+# ----------
+#
+B057F03     Stage sequence number:                  5
+B057F04     Input sample rate (Hz):                 8.0000E+03
+B057F05     Decimation factor:                      2
+B057F06     Decimation offset:                      0
+B057F07     Estimated delay (seconds):              8.7500E-04
+B057F08     Correction applied (seconds):           0.0000E+00
+#
+# Channel Gain
+# ------------
+#
+B058F03     Stage sequence number:                  5
+B058F04     Gain:                                   1.000000E+00
+B058F05     Frequency of gain:                      0.000000E+00
+B058F06     Number of calibrations:                 0
+#
+# Stage 6
+# =======
+#
+# FIR Response
+# ------------
+#
+B061F03     Stage sequence number:                  6
+B061F04     Response Name:                          FIR Stage 3~
+B061F05     Symmetry Code:                          B
+B061F06     Response in units lookup:               COUNTS - Digital Counts
+B061F07     Response out units lookup:              COUNTS - Digital Counts
+B061F08     Number of Coefficients:                 26
+#            Coefficients:
+#             i  value
+B061F09       0  0.0000000E+00
+B061F09       1  0.0000000E+00
+B061F09       2 -5.4389238E-07
+B061F09       3 -6.5118074E-06
+B061F09       4 -3.4630299E-05
+B061F09       5 -1.2030452E-04
+B061F09       6 -3.0755997E-04
+B061F09       7 -6.0300529E-04
+B061F09       8 -8.9454651E-04
+B061F09       9 -8.8430941E-04
+B061F09      10 -1.3562292E-04
+B061F09      11  1.6745254E-03
+B061F09      12  4.3227971E-03
+B061F09      13  6.6553280E-03
+B061F09      14  6.6414177E-03
+B061F09      15  2.1874756E-03
+B061F09      16 -7.3556080E-03
+B061F09      17 -1.9638084E-02
+B061F09      18 -2.8761640E-02
+B061F09      19 -2.6617289E-02
+B061F09      20 -6.1286464E-03
+B061F09      21  3.4787163E-02
+B061F09      22  9.0552106E-02
+B061F09      23  1.4834926E-01
+B061F09      24  1.9207142E-01
+B061F09      25  2.0836936E-01
+#
+# Decimation
+# ----------
+#
+B057F03     Stage sequence number:                  6
+B057F04     Input sample rate (Hz):                 4.0000E+03
+B057F05     Decimation factor:                      4
+B057F06     Decimation offset:                      0
+B057F07     Estimated delay (seconds):              6.2500E-03
+B057F08     Correction applied (seconds):           0.0000E+00
+#
+# Channel Gain
+# ------------
+#
+B058F03     Stage sequence number:                  6
+B058F04     Gain:                                   1.000000E+00
+B058F05     Frequency of gain:                      0.000000E+00
+B058F06     Number of calibrations:                 0
+#
+# Stage 7
+# =======
+#
+# FIR Response
+# ------------
+#
+B061F03     Stage sequence number:                  7
+B061F04     Response Name:                          FIR Stage 4~
+B061F05     Symmetry Code:                          B
+B061F06     Response in units lookup:               COUNTS - Digital Counts
+B061F07     Response out units lookup:              COUNTS - Digital Counts
+B061F08     Number of Coefficients:                 55
+#            Coefficients:
+#             i  value
+B061F09       0 -9.8347664E-07
+B061F09       1 -3.2186508E-06
+B061F09       2 -5.5879354E-07
+B061F09       3  1.8484890E-05
+B061F09       4  4.9859285E-05
+B061F09       5  5.5275857E-05
+B061F09       6 -1.9818544E-06
+B061F09       7 -7.9445541E-05
+B061F09       8 -6.1690807E-05
+B061F09       9  7.9125166E-05
+B061F09      10  1.6397238E-04
+B061F09      11  2.5928020E-06
+B061F09      12 -2.5423616E-04
+B061F09      13 -1.9035488E-04
+B061F09      14  2.4929643E-04
+B061F09      15  4.5736879E-04
+B061F09      16 -5.6222081E-05
+B061F09      17 -7.0178509E-04
+B061F09      18 -3.7721545E-04
+B061F09      19  7.5351447E-04
+B061F09      20  1.0045320E-03
+B061F09      21 -4.2189658E-04
+B061F09      22 -1.6399026E-03
+B061F09      23 -4.1784346E-04
+B061F09      24  1.9651502E-03
+B061F09      25  1.7228052E-03
+B061F09      26 -1.6035959E-03
+B061F09      27 -3.2050759E-03
+B061F09      28  2.5864691E-04
+B061F09      29  4.3244958E-03
+B061F09      30  2.1150559E-03
+B061F09      31 -4.3837875E-03
+B061F09      32 -5.1648095E-03
+B061F09      33  2.7277917E-03
+B061F09      34  8.0822855E-03
+B061F09      35  9.9013001E-04
+B061F09      36 -9.6864030E-03
+B061F09      37 -6.5463930E-03
+B061F09      38  8.6589828E-03
+B061F09      39  1.2975670E-02
+B061F09      40 -3.8931742E-03
+B061F09      41 -1.8554889E-02
+B061F09      42 -5.1330402E-03
+B061F09      43  2.0949081E-02
+B061F09      44  1.8071339E-02
+B061F09      45 -1.7420165E-02
+B061F09      46 -3.3610433E-02
+B061F09      47  4.7799572E-03
+B061F09      48  4.9633756E-02
+B061F09      49  2.1985255E-02
+B061F09      50 -6.3613482E-02
+B061F09      51 -7.8508988E-02
+B061F09      52  7.3153354E-02
+B061F09      53  3.0865054E-01
+B061F09      54  4.2345953E-01
+#
+# Decimation
+# ----------
+#
+B057F03     Stage sequence number:                  7
+B057F04     Input sample rate (Hz):                 1.0000E+03
+B057F05     Decimation factor:                      2
+B057F06     Decimation offset:                      0
+B057F07     Estimated delay (seconds):              5.4000E-02
+B057F08     Correction applied (seconds):           6.2000E-02
+#
+# Channel Gain
+# ------------
+#
+B058F03     Stage sequence number:                  7
+B058F04     Gain:                                   1.000000E+00
+B058F05     Frequency of gain:                      0.000000E+00
+B058F06     Number of calibrations:                 0
+#
+# Total Gain
+# ==========
+#
+# Channel Gain
+# ------------
+#
+B058F03     Stage sequence number:                  0
+B058F04     Gain:                                   6.047314E+09
+B058F05     Frequency of gain:                      1.000000E+00
+B058F06     Number of calibrations:                 0
